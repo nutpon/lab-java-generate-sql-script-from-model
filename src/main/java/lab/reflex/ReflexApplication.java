@@ -109,7 +109,7 @@ public class ReflexApplication {
                     continue;
                 }
 
-                String annotationName = fields[i].getAnnotation(Column.class).name();
+                String annotationName = field.getAnnotation(Column.class).name();
                 String columnName = String.format("%s%s%s","[", annotationName, "]");
                 columns.add(columnName);
             }
