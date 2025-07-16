@@ -101,11 +101,9 @@ public class ReflexApplication {
 
         List<String> columns = new ArrayList<>();
 
-        for (int i = 0; i < fields.length ; i++) {
+        for (Field field : fields) {
 
-            if(fields[i].getAnnotation(Column.class) != null){
-
-                Field field = fields[i];
+            if(field.getAnnotation(Column.class) != null){
                 boolean isMatched = Arrays.stream(ignoreFields).anyMatch(x-> x.equals(field.getName()));
                 if(isMatched){
                     continue;
@@ -133,18 +131,16 @@ public class ReflexApplication {
 
         List<String> columns = new ArrayList<>();
 
-        for (int i = 0; i < fields.length ; i++) {
+        for (Field field : fields) {
 
-            if(fields[i].getAnnotation(Column.class) != null){
-
-                Field field = fields[i];
-                boolean isMatched = Arrays.stream(ignoreFields).anyMatch(x-> x.equals(field.getName()));
-                if(isMatched){
+            if (field.getAnnotation(Column.class) != null) {
+                boolean isMatched = Arrays.stream(ignoreFields).anyMatch(x -> x.equals(field.getName()));
+                if (isMatched) {
                     continue;
                 }
 
-                String annotationName = fields[i].getAnnotation(Column.class).name();
-                String columnName = String.format("%s.%s%s%s",alias,"[", annotationName, "]");
+                String annotationName = field.getAnnotation(Column.class).name();
+                String columnName = String.format("%s.%s%s%s", alias, "[", annotationName, "]");
                 columns.add(columnName);
             }
 
