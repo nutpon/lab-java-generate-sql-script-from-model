@@ -22,6 +22,7 @@ public class ReflexApplication {
 //            GenerateScript(model);
 
              System.out.println(GenerateColumns(model,new String[]{"publicField"}));
+            System.out.println(GenerateColumnsWithAliasName(model,new String[]{"publicField"},"tms"));
 
 //            // 1. รับ Class Object
 //            Class<?> myClass = MyClass.class; // รับ Class Object จากชื่อคลาส (Fully Qualified Name)
@@ -112,6 +113,38 @@ public class ReflexApplication {
 
                 String annotationName = fields[i].getAnnotation(Column.class).name();
                 String columnName = String.format("%s%s%s","[", annotationName, "]");
+                columns.add(columnName);
+            }
+
+        }
+
+        if(columns.size() == 0 ) {
+            return "";
+        }
+
+        return String.join(",",columns);
+    }
+
+    public static String GenerateColumnsWithAliasName( Object dataModel , String[] ignoreFields,String alias) throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
+        Class<?> myClass = dataModel.getClass();
+        Object instance = myClass.getDeclaredConstructor().newInstance();
+
+        Field[] fields = myClass.getFields();
+
+        List<String> columns = new ArrayList<>();
+
+        for (int i = 0; i < fields.length ; i++) {
+
+            if(fields[i].getAnnotation(Column.class) != null){
+
+                Field field = fields[i];
+                boolean isMatched = Arrays.stream(ignoreFields).anyMatch(x-> x.equals(field.getName()));
+                if(isMatched){
+                    continue;
+                }
+
+                String annotationName = fields[i].getAnnotation(Column.class).name();
+                String columnName = String.format("%s.%s%s%s",alias,"[", annotationName, "]");
                 columns.add(columnName);
             }
 
