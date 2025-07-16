@@ -1,0 +1,1 @@
+# lab-java-generate-sql-script-from-model
