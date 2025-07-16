@@ -45,6 +45,10 @@
 			<artifactId>lombok</artifactId>
 			<version>1.18.38</version> <scope>provided</scope>
 		</dependency>
+		<dependency>
+			<groupId>jakarta.persistence</groupId>
+			<artifactId>jakarta.persistence-api</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>

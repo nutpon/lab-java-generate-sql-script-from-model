@@ -1,13 +1,15 @@
 package lab.reflex;
 
-import org.springframework.boot.SpringApplication;
+import jakarta.persistence.Column;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Stream;
 
 @SpringBootApplication
 public class ReflexApplication {
@@ -17,7 +19,9 @@ public class ReflexApplication {
         try {
             MyClass model = new MyClass();
             model.setPrivateField("test");
-            GenerateScript(model);
+//            GenerateScript(model);
+
+             System.out.println(GenerateColumns(model,new String[]{"publicField"}));
 
 //            // 1. รับ Class Object
 //            Class<?> myClass = MyClass.class; // รับ Class Object จากชื่อคลาส (Fully Qualified Name)
@@ -86,6 +90,38 @@ public class ReflexApplication {
         }
 
         return "";
+    }
+
+    public static String GenerateColumns( Object dataModel , String[] ignoreFields) throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
+        Class<?> myClass = dataModel.getClass();
+        Object instance = myClass.getDeclaredConstructor().newInstance();
+
+        Field[] fields = myClass.getFields();
+
+        List<String> columns = new ArrayList<>();
+
+        for (int i = 0; i < fields.length ; i++) {
+
+            if(fields[i].getAnnotation(Column.class) != null){
+
+                Field field = fields[i];
+                boolean isMatched = Arrays.stream(ignoreFields).anyMatch(x-> x.equals(field.getName()));
+                if(isMatched){
+                    continue;
+                }
+
+                String annotationName = fields[i].getAnnotation(Column.class).name();
+                String columnName = String.format("%s%s%s","[", annotationName, "]");
+                columns.add(columnName);
+            }
+
+        }
+
+        if(columns.size() == 0 ) {
+            return "";
+        }
+
+        return String.join(",",columns);
     }
 
 }
