@@ -8,6 +8,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -24,6 +25,39 @@ public class ReflexApplication {
 
 
         try {
+
+            System.out.println("String.class: " + String.class);
+
+            System.out.println("boolean.class: " + boolean.class);
+            System.out.println("Boolean.class: " + Boolean.class);
+
+            System.out.println("byte.class: " + byte.class);
+            System.out.println("Byte.class: " + Byte.class);
+
+            System.out.println("short.class: " + short.class);
+            System.out.println("Short.class: " + Short.class);
+
+            System.out.println("int.class: " + int.class);
+            System.out.println("Integer.class: " + Integer.class);
+
+            System.out.println("long.class: " + long.class);
+            System.out.println("Long.class: " + Long.class);
+
+            System.out.println("float.class: " + float.class);
+            System.out.println("Float.class: " + Float.class);
+
+            System.out.println("double.class: " + double.class);
+            System.out.println("Double.class: " + Double.class);
+
+            System.out.println("char.class: " + char.class);
+            System.out.println("Character.class: " + Character.class);
+
+            System.out.println("Date.class: " + Date.class);
+
+            System.out.println("\nComparison with TYPE constants:");
+            System.out.println("boolean.class == Boolean.TYPE: " + (boolean.class == Boolean.TYPE));
+            System.out.println("int.class == Integer.TYPE: " + (int.class == Integer.TYPE));
+
             MyClass model = new MyClass();
             model.setPrivateField("test");
 //            GenerateScript(model);
@@ -38,50 +72,7 @@ public class ReflexApplication {
 //            System.out.println(GenerateAliasColumnWithInclude(model,new String[]{"publicField"},"tms"));
 
             //GenerateValue
-            System.out.println(GenerateValue(model,new String[]{"privateField"}));
-
-//            System.out.println(GenerateColumnsWithAliasName(model,new String[]{"privateField"},"tms"));
-
-//            // 1. รับ Class Object
-//            Class<?> myClass = MyClass.class; // รับ Class Object จากชื่อคลาส (Fully Qualified Name)
-//            // หรือ Class<MyClass> myClass = MyClass.class; // ถ้าคลาสมีใน Compile-time
-//            // หรือ MyClass obj = new MyClass("test"); Class<?> myClass = obj.getClass();
-//
-//            System.out.println("Class Name: " + myClass.getName());
-//
-//            // 2. เข้าถึง Constructors และสร้าง Instance
-//            Constructor<?> constructor = myClass.getConstructor(String.class); // รับ Constructor ที่รับ String
-//            MyClass instance = (MyClass) constructor.newInstance("Value via Reflection");
-//            System.out.println("Instance created. privateField: " + instance.privateField); // ยังเข้าถึงไม่ได้ตรงๆ เพราะ private
-//
-//            Field[] fields = myClass.getFields();
-//            System.out.println("Public fields slice : " + fields[0]);
-//
-//            // 3. เข้าถึง Public Fields
-//            Field publicField = myClass.getField("publicField"); // เข้าถึง public field
-//            System.out.println("Public Field Name: " + publicField.getName());
-//            System.out.println("Public Field Value (before): " + publicField.get(instance));
-//            publicField.set(instance, 20); // เปลี่ยนค่า public field
-//            System.out.println("Public Field Value (after): " + publicField.get(instance));
-//
-//            // 4. เข้าถึง Private Fields (ต้องตั้งค่า setAccessible(true))
-//            Field privateField = myClass.getDeclaredField("privateField"); // getDeclaredField() สำหรับ private/protected/default
-//            privateField.setAccessible(true); // อนุญาตให้เข้าถึง private field
-//            System.out.println("Private Field Name: " + privateField.getName());
-//            System.out.println("Private Field Value: " + privateField.get(instance));
-//            privateField.set(instance, "New Private Value"); // เปลี่ยนค่า private field
-//            System.out.println("Private Field Value (after set): " + privateField.get(instance));
-//
-//
-//            // 5. เข้าถึง Public Methods และเรียกใช้
-//            Method publicMethod = myClass.getMethod("publicMethod", String.class); // รับเมธอด publicMethod ที่รับ String
-//            publicMethod.invoke(instance, "Hello from Reflection!"); // เรียกใช้เมธอด publicMethod
-//
-//            // 6. เข้าถึง Private Methods และเรียกใช้ (ต้องตั้งค่า setAccessible(true))
-//            Method privateMethod = myClass.getDeclaredMethod("privateMethod", int.class); // รับเมธอด privateMethod ที่รับ int
-//            privateMethod.setAccessible(true); // อนุญาตให้เรียกใช้ private method
-//            String privateResult = (String) privateMethod.invoke(instance, 5); // เรียกใช้เมธอด privateMethod
-//            System.out.println(privateResult);
+//            System.out.println(GenerateValue(model,new String[]{"privateField"}));
 
         } catch (Exception e) {
             e.printStackTrace();
